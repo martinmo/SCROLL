@@ -19,12 +19,9 @@ object BankBenchmark {
     def setup(): Unit = {
       bank = new Bank
       for (_ <- 1 to N) {
-        val p = new Person
-        val c = bank.newCustomer(p)
-        val sa = new Account(1000.0f)
-        val ca = new Account(1000.0f)
-        c.addSavingsAccount(sa)
-        c.addCheckingsAccount(ca)
+        val c = bank.newCustomer(new Person())
+        c.addSavingsAccount(new Account(1000.0f))
+        c.addCheckingsAccount(new Account(1000.0f))
       }
       Transaction partOf bank
     }
