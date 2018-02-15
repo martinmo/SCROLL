@@ -11,3 +11,5 @@ source_gen*
 .project
 .settings/
 /bin/
+benchmark_*.csv
+benchmark_*.json
