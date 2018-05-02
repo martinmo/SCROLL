@@ -108,5 +108,11 @@ lazy val benchmark = (project in file("benchmark")).
   dependsOn(core).
   enablePlugins(JmhPlugin).
   settings(
-    mainClass in(Jmh, run) := Some("scroll.benchmarks.RunnerApp")
+    javaOptions in(Jmh, run) ++= Seq(
+      "-Duser.language=en",
+      "-Duser.country=US"
+    ) ++ {
+      val version = sys.props.get("java.version").getOrElse("")
+      if (version.startsWith("1.8")) Seq() else Seq("--add-opens=java.base/java.io=ALL-UNNAMED")
+    }
   )
