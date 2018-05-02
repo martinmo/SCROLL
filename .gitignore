@@ -12,3 +12,4 @@ source_gen*
 /bin/
 benchmark_*.csv
 benchmark_*.json
+*.jfr
