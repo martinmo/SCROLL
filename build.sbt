@@ -114,5 +114,16 @@ lazy val benchmark = (project in file("benchmark")).
     ) ++ {
       val version = sys.props.get("java.version").getOrElse("")
       if (version.startsWith("1.8")) Seq() else Seq("--add-opens=java.base/java.io=ALL-UNNAMED")
+    },
+    mainClass in assembly := Some("org.openjdk.jmh.Main"),
+    assemblyJarName in assembly := "benchmarks.jar",
+    assemblyMergeStrategy in assembly := {
+      case "plugin.properties" => MergeStrategy.discard
+      case "plugin.xml" => MergeStrategy.discard
+      case "schema/dynamic_package.exsd" => MergeStrategy.discard
+      case "schema/generated_package.exsd" => MergeStrategy.discard
+      case x =>
+        val oldStrategy = (assemblyMergeStrategy in assembly).value
+        oldStrategy(x)
     }
   )
