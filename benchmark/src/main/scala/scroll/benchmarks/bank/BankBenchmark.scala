@@ -1,10 +1,7 @@
 package scroll.benchmarks.bank
 
-import java.util.concurrent.TimeUnit
-
 import org.openjdk.jmh.annotations._
 import scroll.benchmarks.bank.Transaction.{Source, Target}
-import scroll.benchmarks.AbstractBenchmark
 
 object BankBenchmark {
 
@@ -30,8 +27,9 @@ object BankBenchmark {
 
 }
 
-@OutputTimeUnit(TimeUnit.SECONDS)
-class BankBenchmark extends AbstractBenchmark {
+@BenchmarkMode(Array(Mode.SingleShotTime))
+@Fork(warmups = 1)
+class BankBenchmark {
   import BankBenchmark.Local
 
   @Benchmark
