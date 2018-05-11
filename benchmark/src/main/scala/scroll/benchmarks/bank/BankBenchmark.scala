@@ -34,10 +34,24 @@ class BankBenchmark {
 
   @Benchmark
   def process_transactions_NxN(state: Local): Boolean = {
+
+    // IMPLEMENTATION NOTE: The following loops are hand-coded using iterators, in order to get Scala
+    // to emit bytecode (nearly) identical to the one that javac emits for enhanced for loops (Scala's
+    // for loop translates to several lambdas). This ensures that at least the bodies of the benchmark
+    // methods are comparable between the other benchmarks (RoleVM, OT/J, Role Object Pattern).
+
+    // The only remaining difference is that state.bank and state.N are accessed with INVOKEVIRTUAL
+    // instead of GETFIELD, but this happens only once:
     val bank = state.bank
-    for (from <- bank.getCheckingAccounts()) {
-      val amount : Float = from.getBalance() / state.N
-      for (to <- bank.getSavingAccounts()) {
+    val N = state.N
+
+    val iterator = bank.getCheckingAccounts().iterator
+    while (iterator.hasNext) {
+      val from = iterator.next()
+      val amount : Float = from.getBalance() / N
+      val innerIterator = bank.getSavingAccounts().iterator
+      while (innerIterator.hasNext) {
+        val to = innerIterator.next()
         val transaction = new Transaction(new Source(from), new Target(to))
         transaction.execute(amount)
       }

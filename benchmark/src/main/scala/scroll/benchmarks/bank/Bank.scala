@@ -1,11 +1,13 @@
 package scroll.benchmarks.bank
 
 import scroll.internal.Compartment
+import scroll.internal.graph.CachedScalaRoleGraph
 import scroll.internal.support.DispatchQuery._
 
 import scala.collection.mutable.ArrayBuffer
 
 class Bank extends Compartment {
+  plays = new CachedScalaRoleGraph(checkForCycles = false)
   private val checkingAccounts = ArrayBuffer.empty[Account]
   private val savingAccounts = ArrayBuffer.empty[Account]
 
