@@ -14,7 +14,7 @@ object NoopBenchmark {
     var x, y: Int = _
     var player: SCROLLDynamic = _
 
-    @Param(Array("true", "false"))
+    @Param(Array("true"))
     var cached: Boolean = _
 
     @Setup(Level.Iteration)
