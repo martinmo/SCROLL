@@ -35,27 +35,26 @@ class Bank extends Compartment {
   }
 
   class CheckingsAccount {
-    private val limit = 100.0f
+    implicit val dd = Bypassing(_.isInstanceOf[CheckingsAccount])
 
     def decrease(amount: Float): Unit = {
-      if (amount > limit) {
+      //println("decreaseWithLimit")
+      if (amount <= 100.0f) {
+        +this decrease amount
+      } else {
         // Exceptions will be silently swallowed :(
         throw new IllegalArgumentException("amount > limit")
       }
-      //println("decreaseWithLimit")
-      implicit val dd = Bypassing(_.isInstanceOf[CheckingsAccount])
-      +this decrease amount
     }
   }
 
   class SavingsAccount {
-    private def transactionFee(amount: Float): Float = amount * 0.1f
+    implicit val dd = Bypassing(_.isInstanceOf[SavingsAccount])
+    private def transactionFee(amount: Float) = amount * 0.1f
 
     def increase(amount: Float): Unit = {
       //println("increaseWithFee")
-      implicit val dd = Bypassing(_.isInstanceOf[SavingsAccount])
       +this increase (amount - transactionFee(amount))
     }
   }
-
 }
