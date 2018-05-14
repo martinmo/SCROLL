@@ -11,15 +11,15 @@ object MultipleRoles extends App {
   }
 
   class MultiRole extends Compartment {
-    class RoleTypeA {
-      implicit val dd = Bypassing(_.equals(this)) // ???
+    case class RoleTypeA(id: String = "RoleTypeA") {
+      implicit val dd = Bypassing(_.equals(this))
       def someMethod(): Unit = {
         println(s"RoleTypeA($this)::someMethod()")
         (+this).someMethod()
       }
     }
-    class RoleTypeB {
-      implicit val dd = Bypassing(_.equals(this)) // ???
+    case class RoleTypeB(id: String = "RoleTypeB") {
+      implicit val dd = Bypassing((o: AnyRef) => o.equals(this) || !o.isInstanceOf[CoreType])
       def someMethod(): Unit = {
         println(s"RoleTypeB($this)::someMethod()")
         (+this).someMethod()
@@ -33,7 +33,6 @@ object MultipleRoles extends App {
     println("---")
 
     val anotherPlayer = new CoreType() play new RoleTypeA() play new RoleTypeB()
-    // implicit val dd = ???
     anotherPlayer.someMethod()
     println("---")
   }
