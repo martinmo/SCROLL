@@ -12,7 +12,7 @@ import scroll.benchmarks.bank_bigdec.Transaction._
 object BigDecBankBenchmark {
   @State(Scope.Benchmark)
   class Local {
-    @Param(Array("800"))
+    @Param(Array("250", "500", "1000"))
     var N: Int = _
 
     var nAsBigDecimal: BigDecimal = _
@@ -37,7 +37,7 @@ object BigDecBankBenchmark {
   * @author Martin Morgenstern
   */
 @BenchmarkMode(Array(Mode.SingleShotTime))
-@Fork(warmups = 1)
+@Fork(warmups = 1, value = 15)
 class BigDecBankBenchmark {
   import BigDecBankBenchmark.Local
 

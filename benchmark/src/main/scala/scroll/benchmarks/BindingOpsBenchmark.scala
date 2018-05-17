@@ -55,7 +55,7 @@ class SimpleCompartment(numRoles: Int) extends Compartment {
 object BindingOpsBenchmark {
   @State(Scope.Benchmark)
   class Local {
-    @Param(Array("5"))
+    @Param(Array("1"))
     var N: Int = _
 
     var compartment: SimpleCompartment = _

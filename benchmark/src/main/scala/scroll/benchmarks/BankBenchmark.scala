@@ -10,7 +10,7 @@ import scroll.benchmarks.bank.Transaction._
 object BankBenchmark {
   @State(Scope.Benchmark)
   class Local {
-    @Param(Array("1500"))
+    @Param(Array("250", "500", "1000"))
     var N: Int = _
 
     var bank: Bank = _
@@ -32,7 +32,7 @@ object BankBenchmark {
   * @author Martin Morgenstern
   */
 @BenchmarkMode(Array(Mode.SingleShotTime))
-@Fork(warmups = 1)
+@Fork(warmups = 1, value = 15)
 class BankBenchmark {
   import BankBenchmark.Local
 

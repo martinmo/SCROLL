@@ -62,11 +62,6 @@ class NoopBenchmark extends AbstractBenchmark {
   import NoopBenchmark._
 
   @Benchmark
-  @OutputTimeUnit(TimeUnit.NANOSECONDS)
-  def baseline(): Unit = {
-  }
-
-  @Benchmark
   def basecall_noargs(local: Local1): Any = {
     local.player.noArgsA()
   }
